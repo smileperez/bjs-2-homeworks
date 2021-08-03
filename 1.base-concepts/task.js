@@ -6,18 +6,17 @@ function solveEquation(a, b, c) {
   console.log(`Дискриминант равен = ${d}`);
 
   if (d < 0) {
-    console.log(arr);
-    return arr; // array
+    return arr; // выводим из функции пустой массив при d < 0
   } else if (d === 0) {
     arr.push(-b / (2 * a));
-    console.log(arr);
+    return arr; // выводим из функции массив с одним значением X при d = 0
   } else if (d > 0) {
     arr.push((-b + Math.sqrt(d)) / (2 * a));
     arr.push((-b - Math.sqrt(d)) / (2 * a));
-    console.log(arr);
+    return arr; // выводим из функции массив с двумя значениями X при d > 0
+  } else {
+    console.log(`Произошла ошибка`);
   }
-
-  return arr; // array
 }
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
