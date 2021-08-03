@@ -24,6 +24,13 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   // ПРОВЕРКА ВВЕДЕННЫХ ЗНАЧЕНИЙ
   if (isNaN(Number(percent)) == true || isNaN(Number(contribution)) == true || isNaN(Number(amount)) == true) {
     console.log(`Ошибка! Введены не корректные данные!`);
+    if (isNaN(Number(percent)) == true) {
+      console.log(`Параметр "Процентная ставка" содержит неправильное значение "${percent}"`);
+    } else if (isNaN(Number(contribution)) == true) {
+      console.log(`Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`);
+    } else if (isNaN(Number(amount)) == true) {
+      console.log(`Параметр "Общая стоимость" содержит неправильное значение "${amount}"`);
+    }
   } else {
     // ПРИВОДИМ ТИПЫ ДАННЫХ В ПОРЯДОК
     percent = Number(percent);
