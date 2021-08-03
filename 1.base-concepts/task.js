@@ -1,4 +1,4 @@
-'use strict'; // Активируем строгий режим
+// 'use strict'; // Активируем строгий режим
 
 function solveEquation(a, b, c) {
   let arr = [];
