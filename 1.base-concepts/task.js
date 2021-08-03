@@ -64,8 +64,9 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
     // СЧИТАЕМ ОБЩУЮ СУММУ КРЕДИТА
     let totalAmount; // Общая сумма, которую заплатит Клиент
 
-    if (amount === contribution) { // Проверяем, а не хочет ли Клиент протупить и дать первую сумму равной сумме кредита?
+    if (contribution >= amount) { // Проверяем, а не хочет ли Клиент протупить и дать первую сумму равной сумме кредита?
       totalAmount = 0;
+      console.log(`Полная стоимость кредита: ${totalAmount}`)
       return totalAmount;
 
     } else {
