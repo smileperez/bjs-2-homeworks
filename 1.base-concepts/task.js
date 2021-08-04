@@ -51,7 +51,7 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
         console.log(`Ошибка!Конечная дата ипотеки не может быть раньше сегодняшней даты!`)
 
       } else if (targetDate.getFullYear() - nowDate.getFullYear() === 0) { // Кол-во месяцев, если все происходит внутри одного календарного года
-        creditTerm = creditTerm = targetDate.getMonth() - nowDate.getMonth();
+        creditTerm = targetDate.getMonth() - nowDate.getMonth();
         console.log(`Всего месяцев до конца ипотеки: ${creditTerm}`)
 
       } else if (targetDate.getFullYear() - nowDate.getFullYear() === 1) { // Кол-во месяцев, если все происходит внутри двух календарных лет
@@ -91,7 +91,7 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
       // Считаем общую сумму кредита
       totalAmount = paymentPerMonth * creditTerm;
-      totalAmount = totalAmount.toFixed(2);
+      totalAmount = Number(totalAmount.toFixed(2));
       console.log(`Полная стоимость кредита: ${totalAmount}`)
 
       return totalAmount;
