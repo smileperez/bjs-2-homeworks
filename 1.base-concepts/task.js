@@ -25,11 +25,11 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   if (isNaN(Number(percent)) == true || isNaN(Number(contribution)) == true || isNaN(Number(amount)) == true) {
     console.log(`Ошибка! Введены не корректные данные!`);
     if (isNaN(Number(percent)) == true) {
-      console.log(`Параметр "Процентная ставка" содержит неправильное значение "${percent}"`);
+      return (`Параметр "Процентная ставка" содержит неправильное значение "${percent}"`)
     } else if (isNaN(Number(contribution)) == true) {
-      console.log(`Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`);
+      return (`Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`)
     } else if (isNaN(Number(amount)) == true) {
-      console.log(`Параметр "Общая стоимость" содержит неправильное значение "${amount}"`);
+      return (`Параметр "Общая стоимость" содержит неправильное значение "${amount}"`)
     }
   } else {
     // ПРИВОДИМ ТИПЫ ДАННЫХ В ПОРЯДОК
@@ -49,7 +49,7 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
       if (targetDate < nowDate) { // Проверка на глупость
         console.log(`Ошибка!Конечная дата ипотеки не может быть раньше сегодняшней даты!`)
-
+       
       } else if (targetDate.getFullYear() - nowDate.getFullYear() === 0) { // Кол-во месяцев, если все происходит внутри одного календарного года
         creditTerm = targetDate.getMonth() - nowDate.getMonth();
         console.log(`Всего месяцев до конца ипотеки: ${creditTerm}`)
@@ -86,7 +86,6 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
       // Считаем платеж в месяц
       paymentPerMonth = loanBody * (percentPerMonth + percentPerMonth / (((1 + percentPerMonth) ** creditTerm) - 1));
-      paymentPerMonth = paymentPerMonth;
       console.log(`Платеж в месяц: ${paymentPerMonth}`);
 
       // Считаем общую сумму кредита
