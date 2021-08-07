@@ -57,5 +57,22 @@ function makeWork(arrOfArr, func) {
 
 // Задание 3
 function worker2(arr) {
-  // Ваш код
+  let maximum = -Infinity;
+  let minimum = Infinity;
+  let interval;
+  // Проходим по массиву
+  for (let i = 0; i < arr.length; i++) {
+    // Выбираем максимальное значение массива
+    if (arr[i] > maximum) {
+      maximum = arr[i];
+    }
+    // Выбираем минимальное значение массива
+    if (arr[i] < minimum) {
+      minimum = arr[i];
+    }
+  }
+  // Считаем расстояние между 
+  interval = maximum - minimum;
+
+  return interval;
 }
