@@ -12,13 +12,11 @@ function getArrayParams(arr) {
     // Определяем минимальное значение
     if (arr[i] < min) {
       min = arr[i];
-      console.log(`min теперь ${arr[i]}`);
     } 
     
     // Определяем максимальное значение
     if (arr[i] > max) {
       max = arr[i];
-      console.log(`max теперь ${arr[i]}`);
     }
     
     // Рассчитываем сумму массива
@@ -35,21 +33,27 @@ function getArrayParams(arr) {
 
 // Задание 2
 function worker(arr) {
-  let sum;
-
-  // Ваш код
-
+  let sum = 0;
+  // Считаем сумму массива
+  for (let i = 0; i < arr.length; i++) {
+    sum = sum + arr[i];
+  }
   return sum;
 }
 
 function makeWork(arrOfArr, func) {
-  let max
-
-  // Ваш кода
-  // for ...
-  
-  return max
+  let max = -Infinity;
+  // Проходим по массиву
+  for (let i = 0; i < arrOfArr.length; i++) {
+    // Выбираем наибольший массив
+    if (func(arrOfArr[i]) > max) {
+      max = (func(arrOfArr[i]));
+    }
+  }
+  return max;
 }
+
+
 
 // Задание 3
 function worker2(arr) {
