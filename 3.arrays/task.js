@@ -7,5 +7,5 @@ function compareArrays(arr1, arr2) {
 // Задача 3-2
 function advancedFilter(arr) {
   // Фильтр на положительные, следом фильтр на кратные, следом изменение в 10 раз.
-  return arr.filter((item, idx) => item > 0).filter((item, idx) => item % 3 === 0).map((item, idx) => item * 10);
+  return arr.filter(item => item > 0).filter(item => item % 3 === 0).map(item => item * 10);
 }
