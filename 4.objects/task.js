@@ -45,7 +45,6 @@ console.log(student5.marks, student6.marks, student7.marks);
 
 // Создаем новый метод addMarks с REST параметром (mark1,mark2,mark3...)
 Student.prototype.addMarks = function (...mark) {
-  console.log(mark);
   if (this.marks === undefined) { 
     this.marks = mark;
     } else {
@@ -54,7 +53,17 @@ Student.prototype.addMarks = function (...mark) {
 }
 
 // Проверяем результат выполнение нового метода addMarks
-student5.addMarks(4, 1, 1, 1, 4);
-student6.addMarks(2, 3, 4, 7);
-student7.addMarks(3, 3, 3);
+student5.addMarks(4, 4, 4, 4, 4);
+student6.addMarks(2, 3, 4, 3);
+student7.addMarks(5, 5, 5);
 console.log(student5.marks, student6.marks, student7.marks);
+
+// Создаем новый метод getAverage 
+Student.prototype.getAverage = function () {
+  let average = 0;
+  this.marks.forEach(item => average += item);
+  return Number(average/this.marks.length).toFixed(1);
+}
+
+// Проверяем результат выполнение нового метода addMarks
+console.log(student5.getAverage(), student6.getAverage(), student7.getAverage())
