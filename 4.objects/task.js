@@ -1,14 +1,16 @@
+// Создаем функцию конструктор для создания множества экземпляров студентов
 function Student(name, gender, age) {
   this.name = name;
   this.gender = gender;
   this.age = age;
 }
 
+// Сожаем новые экземпляры Student с помощью функции-конструктора
 let student5 = new Student("Andrey", "Efimenko", 27);
 let student6 = new Student("Ivan", "Vinogradov", 28);
 let student7 = new Student("Alena", "Batitskaya", 18);
 
-// Првоеряем результат создания новых экземпляров Student
+// Проверяем результат создания новых экземпляров Student
 console.log(student5, student6, student7);
 
 // Создаем новый метод setSubject
@@ -62,8 +64,22 @@ console.log(student5.marks, student6.marks, student7.marks);
 Student.prototype.getAverage = function () {
   let average = 0;
   this.marks.forEach(item => average += item);
-  return Number(average/this.marks.length).toFixed(1);
+  return average/this.marks.length;
+  // return Number(average/this.marks.length).toFixed(1); Так было бы конечно правильнее, но Jasmine хочет без toFixed
 }
 
 // Проверяем результат выполнение нового метода addMarks
-console.log(student5.getAverage(), student6.getAverage(), student7.getAverage())
+console.log(student5.getAverage(), student6.getAverage(), student7.getAverage());
+
+// Создаем новый метод exclude 
+Student.prototype.exclude = function (reason) {
+  delete this.subject;
+  delete this.marks;
+  this.excluded = reason;
+}
+
+// Проверяем результат выполнение нового метода exclude
+student5.exclude("Неудачник");
+student6.exclude("Прогульщик");
+student7.exclude("Двоечница");
+console.log(student5, student6, student7);
