@@ -53,7 +53,7 @@ Student.prototype.addMarks = function (...mark) {
     }
 }
 
-// Проверяем результат выполнение нового метода addMark
+// Проверяем результат выполнение нового метода addMarks
 student5.addMarks(4, 1, 1, 1, 4);
 student6.addMarks(2, 3, 4, 7);
 student7.addMarks(3, 3, 3);
