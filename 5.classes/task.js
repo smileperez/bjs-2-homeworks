@@ -8,7 +8,7 @@ class PrintEditionItem {
         this.name = name;
         this.releaseDate = releaseDate;
         this.pagesCount = pagesCount;
-        this.state = 31;
+        this.state = 100;
         this.type = null;
     }
 
@@ -57,7 +57,7 @@ console.log(magazine1);
 
 // Расширяем класс PrintEditionItem для производства книг Book
 class Book extends PrintEditionItem {
-    constructor (name, releaseDate, pagesCount, author) {
+    constructor (author, name, releaseDate, pagesCount) {
         super(name, releaseDate, pagesCount);
         this.type = 'book';
         this.author = author;
@@ -65,10 +65,32 @@ class Book extends PrintEditionItem {
 }
 
 // Проверяем корректность создания книги и наследования свойств
-const book2 = new Book('Лучшая книга времен', 2021, 99, 'Ефименко А.А.');
+const book2 = new Book('Ефименко А.А.', 'Лучшая книга времен', 2021, 99);
 console.log(book2);
 
+// Создаем доп класс Novel
+class NovelBook extends Book {
+    constructor (author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
+        this.type = 'novel';
+    }
+}
 
+// Создаем доп класс Fantastic
+class FantasticBook extends Book {
+    constructor (author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
+        this.type = 'fantastic';
+    }
+}
+
+// Создаем доп класс Detective
+class DetectiveBook extends Book {
+    constructor (author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
+        this.type = 'detective';
+    }
+} 
 
 
 // ЗАДАЧА №2. Библиотека
@@ -120,19 +142,19 @@ class Library {
 }
 
 // Создаем экземпляр библиотеки
-const library = new Library("Библиотека имени Андрюхи Ефименко");
+const library2 = new Library("Библиотека имени Андрюхи Ефименко");
 
 // Понасоздаем кучу экземляров печатных изданий
-library.addBook(
+library2.addBook(
     new Book(
+        'Ефименко А.А.',
         'Лучшая книга времен',
         2021,
-        99,
-        'Ефименко А.А.'
+        99
     )
 )
 
-library.addBook(
+library2.addBook(
     new Magazine(
         'Журнал эротики',
         1955,
@@ -140,23 +162,23 @@ library.addBook(
     )
 )
 
-library.addBook(
+library2.addBook(
     new Book(
+        'Виноградов И.И.',
         'Третья книга',
         1999,
-        645,
-        'Виноградов И.И.'
+        645
     )
 )
 
 // Посмотрим всю библиотеку
-console.log(library);
+console.log(library2);
 
 // Проведем локальные тесты
-console.log(library.findBookBy("releaseDate", "1955")); // Результат "Журнал эротики"
-console.log(library.findBookBy("releaseDate", "1977")); // Результат null
+console.log(library2.findBookBy("releaseDate", "1955")); // Результат "Журнал эротики"
+console.log(library2.findBookBy("releaseDate", "1977")); // Результат null
 
-console.log("Количество книг до выдачи: " + library.books.length); //Количество книг до выдачи: 4
-library.giveBookByName("Третья книга");
-console.log("Количество книг после выдачи: " + library.books.length); //Количество книг после выдачи: 3
-console.log(library);
+console.log("Количество книг до выдачи: " + library2.books.length); //Количество книг до выдачи: 4
+library2.giveBookByName("Третья книга");
+console.log("Количество книг после выдачи: " + library2.books.length); //Количество книг после выдачи: 3
+console.log(library2);
