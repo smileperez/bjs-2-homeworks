@@ -88,7 +88,7 @@ describe('Домашнее задание к лекции 5 «Объекты»',
     it('поиск книги', () => {
       library.addBook(printItem);
       const firstBook = library.findBookBy("releaseDate", 2019);
-      expect(firstBook).toEqual('Типовой школьный журнал');
+      expect(firstBook.name).toEqual('Типовой школьный журнал');
       const secondBook = library.findBookBy("releaseDate", 2154);
       expect(secondBook).toEqual(null);
     });   
@@ -96,7 +96,7 @@ describe('Домашнее задание к лекции 5 «Объекты»',
     it('выдача книги', () => {
       library.addBook(printItem);
       const firstBook = library.giveBookByName('Типовой школьный журнал');
-      expect(firstBook).toEqual('Типовой школьный журнал');
+      expect(firstBook.name).toEqual('Типовой школьный журнал');
       expect(library.books.length).toEqual(0);
       const secondBook = library.giveBookByName('Судовой журнал');
       expect(secondBook).toEqual(null);

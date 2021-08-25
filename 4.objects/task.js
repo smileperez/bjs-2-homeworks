@@ -1,14 +1,14 @@
 // Создаем функцию конструктор для создания множества экземпляров студентов
-function Student(name) {
+function Student(name, gender, age) {
   this.name = name;
-  // this.gender = gender;
-  // this.age = age;
+  this.gender = gender;
+  this.age = age;
 }
 
 // Сожаем новые экземпляры Student с помощью функции-конструктора
-let student5 = new Student("Andrey Efimenko");
-let student6 = new Student("Ivan Vinogradov");
-let student7 = new Student("Alena Batitskaya");
+let student5 = new Student("Andrey", "Efimenko", 27);
+let student6 = new Student("Ivan", "Vinogradov", 28);
+let student7 = new Student("Alena", "Batitskaya", 18);
 
 // Проверяем результат создания новых экземпляров Student
 console.log(student5, student6, student7);
