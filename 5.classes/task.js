@@ -182,3 +182,89 @@ console.log("Количество книг до выдачи: " + library2.books
 library2.giveBookByName("Третья книга");
 console.log("Количество книг после выдачи: " + library2.books.length); //Количество книг после выдачи: 3
 console.log(library2);
+
+
+// ЗАДАЧА №3. Журнал успеваемости
+
+// Создаем класс описывающий студентов
+class Student {
+    constructor(name) {
+        this.name = name;
+        this.gradebook = [];
+        // this.gender = gender;
+        // this.age = age;
+    }
+
+    // setSubject(subjectName) {
+    //     this.subject = subjectName;
+    // }
+
+    addMark(mark, subjectName) { // Переделать
+        
+
+        this.gradebook.push(subjectName);
+    
+
+        // if (this.marks === undefined) { 
+        //   this.marks = [mark];
+        // } else {
+        //   this.marks.push(mark);
+        // }
+    }
+
+    // Не актуальный для задачи метод.
+    // addMarks(...mark) {
+    //     if (this.marks === undefined) { 
+    //       this.marks = mark;
+    //     } else {
+    //       this.marks = this.marks.concat(mark);
+    //     }
+    // }
+
+    // getAverage() {
+    //     let average = 0;
+    //     this.marks.forEach(item => average += item);
+    //     return average/this.marks.length;
+    //     // return Number(average/this.marks.length).toFixed(1); Так было бы конечно правильнее, но Jasmine хочет без toFixed
+    // }
+
+    exclude(reason) {
+        delete this.subject;
+        delete this.marks;
+        this.excluded = reason;
+    }
+}
+  
+// Создаем новые экземпляры Student с помощью функции-конструктора
+const student5 = new Student("Andrey Efimenko");
+const student6 = new Student("Ivan Vinogradov");
+const student7 = new Student("Alena Batitskaya");
+  
+//  Проверяем результат выполнение метода setSubject
+//  student5.setSubject("Theme 1");
+//  student6.setSubject("Theme 2");
+//  student7.setSubject("Theme 3");
+//  console.log(student5, student6, student7);
+  
+  // Проверяем результат выполнение метода addMark
+  student5.addMark(4, "Algebra");
+  student6.addMark(5, "Geometry");
+  student7.addMark(3, "History");
+  console.log(student5, student6, student7);
+  console.log(student5.gradebook, student6.gradebook, student7.gradebook);
+  
+//  Не актуальный для данной задачи тест метода
+//  Проверяем результат выполнение метода addMarks
+//  student5.addMarks(4, 4, 4, 4, 4);
+//  student6.addMarks(2, 3, 4, 3);
+//  student7.addMarks(5, 5, 5);
+//  console.log(student5.marks, student6.marks, student7.marks);
+  
+// Проверяем результат выполнение нового метода getAverage
+// console.log(student5.getAverage(), student6.getAverage(), student7.getAverage());
+  
+// Проверяем результат выполнение нового метода exclude
+student5.exclude("Неудачник");
+student6.exclude("Прогульщик");
+student7.exclude("Двоечница");
+console.log(student5, student6, student7);
