@@ -8,7 +8,7 @@ class PrintEditionItem {
         this.name = name;
         this.releaseDate = releaseDate;
         this.pagesCount = pagesCount;
-        this.state = 31;
+        this.state = 100;
         this.type = null;
     }
 
@@ -57,7 +57,7 @@ console.log(magazine1);
 
 // Расширяем класс PrintEditionItem для производства книг Book
 class Book extends PrintEditionItem {
-    constructor (name, releaseDate, pagesCount, author) {
+    constructor (author, name, releaseDate, pagesCount) {
         super(name, releaseDate, pagesCount);
         this.type = 'book';
         this.author = author;
@@ -65,10 +65,29 @@ class Book extends PrintEditionItem {
 }
 
 // Проверяем корректность создания книги и наследования свойств
-const book2 = new Book('Лучшая книга времен', 2021, 99, 'Ефименко А.А.');
+const book2 = new Book('Ефименко А.А.', 'Лучшая книга времен', 2021, 99);
 console.log(book2);
 
+class NovelBook extends Book {
+    constructor (author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
+        this.type = 'novel';
+    }
+}
 
+class FantasticBook extends Book {
+    constructor (author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
+        this.type = 'fantastic';
+    }
+}
+
+class DetectiveBook extends Book {
+    constructor (author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
+        this.type = 'detective';
+    }
+}
 
 
 // ЗАДАЧА №2. Библиотека
@@ -120,19 +139,19 @@ class Library {
 }
 
 // Создаем экземпляр библиотеки
-const library = new Library("Библиотека имени Андрюхи Ефименко");
+const library2 = new Library("Библиотека имени Андрюхи Ефименко");
 
 // Понасоздаем кучу экземляров печатных изданий
-library.addBook(
+library2.addBook(
     new Book(
+        'Ефименко А.А.',
         'Лучшая книга времен',
         2021,
-        99,
-        'Ефименко А.А.'
+        99
     )
 )
 
-library.addBook(
+library2.addBook(
     new Magazine(
         'Журнал эротики',
         1955,
@@ -140,21 +159,21 @@ library.addBook(
     )
 )
 
-library.addBook(
+library2.addBook(
     new Book(
+        'Виноградов И.И.',
         'Третья книга',
         1999,
-        645,
-        'Виноградов И.И.'
+        645
     )
 )
 
 // Посмотрим всю библиотеку
-console.log(library);
+console.log(library2);
 
 // Проведем локальные тесты
-console.log(library.findBookBy("releaseDate", "1955")); // Результат "Журнал эротики"
-console.log(library.findBookBy("releaseDate", "1977")); // Результат null
+console.log(library2.findBookBy("releaseDate", "1955")); // Результат "Журнал эротики"
+console.log(library2.findBookBy("releaseDate", "1977")); // Результат null
 
 console.log("Количество книг до выдачи: " + library2.books.length); //Количество книг до выдачи: 4
 library2.giveBookByName("Третья книга");
@@ -163,6 +182,8 @@ console.log(library2);
 
 
 // ЗАДАЧА №3. Журнал успеваемости
+
+console.log(`//////// НАЧАЛО ЗАДАЧИ 3 ///////////`);
 
 // Создаем класс описывающий студентов
 class Student {
@@ -173,31 +194,66 @@ class Student {
         // this.age = age;
     }
 
-    // setSubject(subjectName) {
-    //     this.subject = subjectName;
-    // }
-
     addMark(mark, subjectName) { // Переделать
+
+        if (mark < 1 || mark > 5) {
+            console.log(`Ошибка, оценка должна быть числом от 1 до 5, а у вас ${mark}`)
+        } else {
+
+            // Проверка на пустой массив. Если массив пустой, то смело запишем нашу оценку к предмету
+            if (this.gradebook.length == 0) {
+                this.gradebook = [{subjectName: subjectName, marks: [mark]}];
+                console.log(`Массив был пустой. Создали первый предмет [0] ${subjectName} в массиве и записали оценку ${mark}.`);
+            } else {
+            // Массив не пустой, поэтому нужно проверить наличие предмета
+                
+            let searchSubject;
+            
+            for (let i = 0; i < this.gradebook.length; i++) {
+                if (this.gradebook[i].subjectName === subjectName) {
+                    searchSubject = i;
+                    console.log(`Поиск предмета ${subjectName}: найден под индексом [${searchSubject}].`);
+                    break;
+                } else {
+                    searchSubject = false; 
+                }
+            }
+
+            if (searchSubject === false) {
+                this.gradebook.push({subjectName: subjectName, marks: [mark]});
+                console.log(`Поиск предмета ${subjectName}: не найден.`);
+                console.log(`Массив не пустой, но и предмета ${subjectName} в массиве нет.`);
+                console.log(`Создали предмет ${subjectName} в массиве и записали оценку ${mark}`);
+            } else {
+                this.gradebook[searchSubject].marks.push(mark);
+                console.log(`Массив не пустой. Нашли предмет [${searchSubject}] ${subjectName}. Добавили дополнительную оценку ${mark}`);
+                console.log(`Текущие оценки предмета ${subjectName}: [${this.gradebook[searchSubject].marks}]`);
+            }
+
         
 
-        this.gradebook.push(subjectName);
-    
 
-        // if (this.marks === undefined) { 
-        //   this.marks = [mark];
-        // } else {
-        //   this.marks.push(mark);
-        // }
+                // for (let i = 0; i < this.gradebook.length; i++) {
+                //     if (this.gradebook[i].subjectName === subjectName) {
+                //         searchSubject = i;
+                //         this.gradebook[i].marks.push(mark);
+                //         console.log(`Массив не пустой. Нашли предмет [${searchSubject}] ${subjectName}. Добавили дополнительную оценку ${mark}`);
+                //         console.log(`Текущие оценки предмета ${subjectName}: [${this.gradebook[i].marks}]`);
+                //         break;
+                //     } else {
+                //         this.gradebook.push({subjectName: subjectName, marks: [mark]});
+                //         console.log(`Массив не пустой. Но в массиве нет запрашиваемого предмета ${subjectName}.`);
+                //         console.log(`Создали предмет [${i}] ${subjectName} в массиве и записали оценку ${mark}`);
+                //     }
+                // }
+            }
+        }
+
+        // console.log(student5);
+
+        // console.log(searchSubject);
+
     }
-
-    // Не актуальный для задачи метод.
-    // addMarks(...mark) {
-    //     if (this.marks === undefined) { 
-    //       this.marks = mark;
-    //     } else {
-    //       this.marks = this.marks.concat(mark);
-    //     }
-    // }
 
     // getAverage() {
     //     let average = 0;
@@ -218,19 +274,21 @@ const student5 = new Student("Andrey Efimenko");
 const student6 = new Student("Ivan Vinogradov");
 const student7 = new Student("Alena Batitskaya");
   
-//  Проверяем результат выполнение метода setSubject
-//  student5.setSubject("Theme 1");
-//  student6.setSubject("Theme 2");
-//  student7.setSubject("Theme 3");
-//  console.log(student5, student6, student7);
-  
-  // Проверяем результат выполнение метода addMark
-  student5.addMark(4, "Algebra");
-  student6.addMark(5, "Geometry");
-  student7.addMark(3, "History");
-  console.log(student5, student6, student7);
-  console.log(student5.gradebook, student6.gradebook, student7.gradebook);
-  
+// Проверяем результат выполнение метода addMark
+student5.addMark(5, "Algebra");
+student5.addMark(3, "Algebra");
+student5.addMark(3, "History");
+student5.addMark(4, "History");
+student5.addMark(3, "Algebra");
+student5.addMark(5, "History");
+student5.addMark(3, "Algebra");
+student5.addMark(4, "Algebra");
+student5.addMark(5, "History");
+// student6.addMark(4, "Algebra");
+// student7.addMark(5, "Geometry");
+console.log(student5);
+console.log(student5.gradebook);
+console.log(`//////// КОНЕЦ ЗАДАЧИ 3 ///////////`);
 //  Не актуальный для данной задачи тест метода
 //  Проверяем результат выполнение метода addMarks
 //  student5.addMarks(4, 4, 4, 4, 4);
@@ -242,7 +300,7 @@ const student7 = new Student("Alena Batitskaya");
 // console.log(student5.getAverage(), student6.getAverage(), student7.getAverage());
   
 // Проверяем результат выполнение нового метода exclude
-student5.exclude("Неудачник");
-student6.exclude("Прогульщик");
-student7.exclude("Двоечница");
-console.log(student5, student6, student7);
+// student5.exclude("Неудачник");
+// student6.exclude("Прогульщик");
+// student7.exclude("Двоечница");
+// console.log(student5, student6, student7);

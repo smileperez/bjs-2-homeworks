@@ -6,9 +6,9 @@ function Student(name, gender, age) {
 }
 
 // Сожаем новые экземпляры Student с помощью функции-конструктора
-let student5 = new Student("Andrey", "Efimenko", 27);
-let student6 = new Student("Ivan", "Vinogradov", 28);
-let student7 = new Student("Alena", "Batitskaya", 18);
+let student5 = new Student("Andrey Efimenko", "male", 27);
+let student6 = new Student("Ivan Vinogradov", "male", 28);
+let student7 = new Student("Alena Batitskaya", "female", 18);
 
 // Проверяем результат создания новых экземпляров Student
 console.log(student5, student6, student7);
@@ -43,6 +43,7 @@ student6.addMark(2);
 student7.addMark(2);
 student7.addMark(2);
 student7.addMark(2);
+console.log(student5, student6, student7);
 console.log(student5.marks, student6.marks, student7.marks);
 
 // Создаем новый метод addMarks с REST параметром (mark1,mark2,mark3...)
