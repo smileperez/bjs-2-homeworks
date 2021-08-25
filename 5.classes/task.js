@@ -196,75 +196,100 @@ class Student {
 
     addMark(mark, subjectName) { // Переделать
 
+        // Проверка на корректность оценки. Если все ОК, то поехали калькулировать.
         if (mark < 1 || mark > 5) {
-            console.log(`Ошибка, оценка должна быть числом от 1 до 5, а у вас ${mark}`)
+            console.log(`!!! Ошибка, оценка должна быть числом от 1 до 5, а у вас ${mark} !!!`)
         } else {
 
-            // Проверка на пустой массив. Если массив пустой, то смело запишем нашу оценку к предмету
+            // Проверка на пустой журнал оценок gradebook. 
+            // Если журнал оценок gradebook пустой, то смело запишем нашу оценку к предмету.
             if (this.gradebook.length == 0) {
                 this.gradebook = [{subjectName: subjectName, marks: [mark]}];
-                console.log(`Массив был пустой. Создали первый предмет [0] ${subjectName} в массиве и записали оценку ${mark}.`);
+                console.log(`Журнал оценок пустой. Создаем в журнале первый предмет [0] ${subjectName} и фиксируем первую оценку ${mark}.`);
             } else {
-            // Массив не пустой, поэтому нужно проверить наличие предмета
-                
-            let searchSubject;
             
-            for (let i = 0; i < this.gradebook.length; i++) {
-                if (this.gradebook[i].subjectName === subjectName) {
-                    searchSubject = i;
-                    console.log(`Поиск предмета ${subjectName}: найден под индексом [${searchSubject}].`);
-                    break;
+                // Если журнал оценок уже не пустой, то проверить наличие предмета в журнале:
+                let searchSubject;
+                for (let i = 0; i < this.gradebook.length; i++) {
+                    if (this.gradebook[i].subjectName === subjectName) {
+                        searchSubject = i;
+                        console.log(`Поиск предмета ${subjectName}: найден под индексом [${searchSubject}].`);
+                        break;
+                    } else {
+                        searchSubject = false; 
+                    }
+                }
+
+                    // При searchSubject === false, предмета в журнале нет и его необходимо создать. Создаем:
+                if (searchSubject === false) {
+                    this.gradebook.push({subjectName: subjectName, marks: [mark]});
+                    console.log(`Поиск предмета ${subjectName}: не найден.`);
+                    console.log(`Массив не пустой, но и предмета ${subjectName} в массиве нет.`);
+                    console.log(`Создали предмет ${subjectName} в массиве и записали оценку ${mark}`);
                 } else {
-                    searchSubject = false; 
+                    // В другом случае предмет в журнале оценок уже есть, значит просто добавялем новые оценки.
+                    this.gradebook[searchSubject].marks.push(mark);
+                    console.log(`Массив не пустой. Нашли предмет [${searchSubject}] ${subjectName}. Добавили дополнительную оценку ${mark}`);
+                    console.log(`Текущие оценки предмета ${subjectName}: [${this.gradebook[searchSubject].marks}]`);
                 }
             }
+        }
+    }
 
-            if (searchSubject === false) {
-                this.gradebook.push({subjectName: subjectName, marks: [mark]});
-                console.log(`Поиск предмета ${subjectName}: не найден.`);
-                console.log(`Массив не пустой, но и предмета ${subjectName} в массиве нет.`);
-                console.log(`Создали предмет ${subjectName} в массиве и записали оценку ${mark}`);
+    getAverageBySubject(subjectName) {
+
+        // Проверка на пустой журнал оценок gradebook. 
+        // Если журнал оценок gradebook пустой, то выводим ошибку.
+            if (this.gradebook.length == 0) {
+                console.log(`!!! Невозможно рассчитать среднюю оценку. Журнал оценок пустой !!!`);
             } else {
-                this.gradebook[searchSubject].marks.push(mark);
-                console.log(`Массив не пустой. Нашли предмет [${searchSubject}] ${subjectName}. Добавили дополнительную оценку ${mark}`);
-                console.log(`Текущие оценки предмета ${subjectName}: [${this.gradebook[searchSubject].marks}]`);
+            
+                // Если журнал оценок не пустой, то ищем наличие предмета в журнале:
+                let searchSubject;
+                for (let i = 0; i < this.gradebook.length; i++) {
+                    if (this.gradebook[i].subjectName === subjectName) {
+                        searchSubject = i;
+                        console.log(`Поиск предмета ${subjectName}: найден под индексом [${searchSubject}].`);
+                        break;
+                    } else {
+                        searchSubject = false; 
+                    }
+                }
+
+                // Если не нашли предмет в журнале, выводим ошибку:
+                if (searchSubject === false) {
+                    console.log(`Поиск предмета ${subjectName}: Несуществующий предмет.`);
+                } else {
+                    
+                    // Если все ок, то считаем среднее арифметическое
+                    let sum = 0;
+                    this.gradebook[searchSubject].marks.forEach(item => sum += item);
+                    
+                    console.log(Number(sum / this.gradebook[searchSubject].marks.length).toFixed(1));
+                    return sum / this.gradebook[searchSubject].marks.length;
+                }
             }
+    }
 
-        
+    getAverage() {
+        let sum = 0;
+        let clock = 0;
 
-
-                // for (let i = 0; i < this.gradebook.length; i++) {
-                //     if (this.gradebook[i].subjectName === subjectName) {
-                //         searchSubject = i;
-                //         this.gradebook[i].marks.push(mark);
-                //         console.log(`Массив не пустой. Нашли предмет [${searchSubject}] ${subjectName}. Добавили дополнительную оценку ${mark}`);
-                //         console.log(`Текущие оценки предмета ${subjectName}: [${this.gradebook[i].marks}]`);
-                //         break;
-                //     } else {
-                //         this.gradebook.push({subjectName: subjectName, marks: [mark]});
-                //         console.log(`Массив не пустой. Но в массиве нет запрашиваемого предмета ${subjectName}.`);
-                //         console.log(`Создали предмет [${i}] ${subjectName} в массиве и записали оценку ${mark}`);
-                //     }
-                // }
+        // Считаем сумму всех возможных оценок по всем предметам. И считаем кол-во оценок.
+        for (let i=0; i < this.gradebook.length; i++) {
+            for (let j=0; j < this.gradebook[i].marks.length; j++) {
+                sum += this.gradebook[i].marks[j];
+                clock++;
             }
         }
 
-        // console.log(student5);
-
-        // console.log(searchSubject);
-
+        // Считаем среднее арифметическое
+        console.log(Number(sum / clock).toFixed(1));
+        return sum / clock;
     }
 
-    // getAverage() {
-    //     let average = 0;
-    //     this.marks.forEach(item => average += item);
-    //     return average/this.marks.length;
-    //     // return Number(average/this.marks.length).toFixed(1); Так было бы конечно правильнее, но Jasmine хочет без toFixed
-    // }
-
     exclude(reason) {
-        delete this.subject;
-        delete this.marks;
+        delete this.gradebook;
         this.excluded = reason;
     }
 }
@@ -282,25 +307,25 @@ student5.addMark(4, "History");
 student5.addMark(3, "Algebra");
 student5.addMark(5, "History");
 student5.addMark(3, "Algebra");
-student5.addMark(4, "Algebra");
+student5.addMark(3, "Geometry");
+student5.addMark(4, "Geometry");
+student5.addMark(6, "Algebra"); // Ошибка
 student5.addMark(5, "History");
-// student6.addMark(4, "Algebra");
-// student7.addMark(5, "Geometry");
-console.log(student5);
+student5.addMark(4, "Geometry");
+
+// Проверяем результат выполнение метода getAverageBySubject
+student5.getAverageBySubject("Geometry"); // Средний балл по предмету Geometry 3.7
+student5.getAverageBySubject("Algebra"); // Средний балл по предмету Algebra 3.5
+student5.getAverageBySubject("History"); // Средний балл по предмету History 4.3
+student5.getAverageBySubject("Biology"); // Несуществующий предмет
+
+// Проверяем результат выполнение метода getAverage
+student5.getAverage(); // Средний балл по всем предметам 4.75
+
+// Проверяем результат выполнение метода exclude
+student5.exclude("Исключен за попытку подделать оценки");
+
+
 console.log(student5.gradebook);
+console.log(student5);
 console.log(`//////// КОНЕЦ ЗАДАЧИ 3 ///////////`);
-//  Не актуальный для данной задачи тест метода
-//  Проверяем результат выполнение метода addMarks
-//  student5.addMarks(4, 4, 4, 4, 4);
-//  student6.addMarks(2, 3, 4, 3);
-//  student7.addMarks(5, 5, 5);
-//  console.log(student5.marks, student6.marks, student7.marks);
-  
-// Проверяем результат выполнение нового метода getAverage
-// console.log(student5.getAverage(), student6.getAverage(), student7.getAverage());
-  
-// Проверяем результат выполнение нового метода exclude
-// student5.exclude("Неудачник");
-// student6.exclude("Прогульщик");
-// student7.exclude("Двоечница");
-// console.log(student5, student6, student7);
