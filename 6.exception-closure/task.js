@@ -19,8 +19,10 @@ const validateCount = (parse) => {
 
 
 // ЗАДАЧА 2
-class Triangle {
 
+// Создаем класс треугольника
+class Triangle {
+    // Конструктор создания треугольника с проверкой на валидность данных
     constructor (a, b, c) {
         if (a + b > c && a + c > b && b + c > a) {
             this.a = a;
@@ -30,11 +32,11 @@ class Triangle {
             throw new Error("Треугольник с такими сторонами не существует")
         }
     }
-
+    // Метод получения периметра
     getPerimeter() {
         return this.a + this.b + this.c;
     }
-
+    // Метод получения площади по формуле Герона
     getArea() {
         let p = this.getPerimeter() / 2;
         let s = Math.sqrt(p * (p - this.a) * (p - this.b) * (p - this.c));
@@ -42,6 +44,14 @@ class Triangle {
     }
 }
 
+// Функция создания треугольника
 const getTriangle = (a, b, c) => {
-
+    try {
+        return new Triangle(a, b, c);
+    } catch(err) {
+        return {
+           getPerimeter: function() { return "Ошибка! Треугольник не существует" },
+           getArea: function() { return "Ошибка! Треугольник не существует" }
+        }
+    }
 }
