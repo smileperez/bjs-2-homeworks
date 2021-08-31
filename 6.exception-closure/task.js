@@ -8,8 +8,12 @@ const parseCount = (parse) => {
 }
 
 // Создаем функцию валидации
-const validateCount = () => {
-
+const validateCount = (parse) => {
+    try {
+        return parseCount(parse);
+    } catch(err) {
+        return err;
+    }
 }
 
 
