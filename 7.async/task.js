@@ -7,31 +7,29 @@ class AlarmClock {
     }
     
     // Создаем метод добавления будильников
-    addClock(id, time, action) {
+    addClock(time, action, id) {
 
         // Создаем конструктор для создания звонков и дальнейшего их добавления в массив alarmCollection
-        function AlarmConstructor(id, time, action) {
+        function AlarmConstructor(time, action, id) {
             this.id = id;
             this.time = time;
             this.action = action;
         }
 
         // Проверка на существования в запросе параметра ID
-        if (arguments[2] === undefined) throw new Error('В запросе отсутствует параметр ID');
+        if (id === undefined) throw new Error('В запросе отсутствует параметр ID');
 		
-        // Выполняем поиск по ID. Если такой ID уже существует, то прекращаем выполнение данного метода.
-        let searchID = 0;
-        for (let i = 0; i < this.alarmCollection.length; i++) {
-            if (this.alarmCollection[i].id === id) {
-                searchID++;
-                console.error('Будильник не добавлен. Будильник с таким ID уже существует');
-                return;
-            }
+        // Вспомогательная функция для поиска ID через метод .some
+        function searchID(element) {
+            return element = id;
         }
-        
+
+        // Выполняем поиск по ID. Если такой ID уже существует, то прекращаем выполнение данного метода.
+        if (this.alarmCollection.some(searchID)) {
+            console.error('Будильник не добавлен. Будильник с таким ID уже существует');
         // Если ничего не нашли, добавляем новый будильник в коллекцию
-        if (searchID === 0) {
-            this.alarmCollection.push(new AlarmConstructor(id, time, action));
+        } else {
+            this.alarmCollection.push(new AlarmConstructor(time, action, id));
         }
 
     }
