@@ -11,21 +11,16 @@ class AlarmClock {
 
         // Создаем конструктор для создания звонков и дальнейшего их добавления в массив alarmCollection
         function AlarmConstructor(time, action, id) {
-            this.id = id;
             this.time = time;
             this.action = action;
+            this.id = id;
         }
 
         // Проверка на существования в запросе параметра ID
         if (id === undefined) throw new Error('В запросе отсутствует параметр ID');
 		
-        // Вспомогательная функция для поиска ID через метод .some
-        function searchID(element) {
-            return element = id;
-        }
-
         // Выполняем поиск по ID. Если такой ID уже существует, то прекращаем выполнение данного метода.
-        if (this.alarmCollection.some(searchID)) {
+        if (this.alarmCollection.some(element => element = id)) {
             console.error('Будильник не добавлен. Будильник с таким ID уже существует');
         // Если ничего не нашли, добавляем новый будильник в коллекцию
         } else {
