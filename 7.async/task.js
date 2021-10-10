@@ -1,12 +1,12 @@
 class AlarmClock {
 
-    // Создаем конструктор класса будильников
+    // Создаем конструктор класса будильника
     constructor () {
         this.alarmCollection = [];
         this.timerId = null;
     }
     
-    // Создаем метод добавления будильников
+    // Создаем метод добавления звонков
     addClock(time, action, id) {
 
         // Создаем конструктор для создания звонков и дальнейшего их добавления в массив alarmCollection
@@ -20,7 +20,7 @@ class AlarmClock {
         if (id === undefined) throw new Error('В запросе отсутствует параметр ID');
 		
         // Выполняем поиск по ID. Если такой ID уже существует, то прекращаем выполнение данного метода.
-        if (this.alarmCollection.some(element => element = id)) {
+        if (this.alarmCollection.some(item => item.id === id)) {
             console.error('Будильник не добавлен. Будильник с таким ID уже существует');
         // Если ничего не нашли, добавляем новый будильник в коллекцию
         } else {
@@ -28,23 +28,26 @@ class AlarmClock {
         }
 
     }
-
+        
+    // Создаем метод удаления звонков
     removeClock(id) {
+
         // Выполняем поиск по ID. Если такой ID существует, то удаляем будильник, иначе - завершаем метод.
-        let searchID = 0;
-        for (let i = 0; i < this.alarmCollection.length; i++) {
-            if (this.alarmCollection[i].id === id) {
-                searchID++;
-                this.alarmCollection = this.alarmCollection.filter(item => item.id !== id);
-                console.log('Будильник успешно удален');
-            }
+        let alarmCoolectionlength = this.alarmCollection.length;
+
+        // Фильтриуем массив звонков, удаляем если есть совпдение
+        this.alarmCollection = this.alarmCollection.filter(item => item.id !== id);
+        console.log(this.alarmCollection);
+
+        // Проверяем, удалился ли звонок.
+        if (alarmCoolectionlength === this.alarmCollection.length) {
+            console.error('Будильника с таким ID не существует');
+            return false;
+        } else {
+            console.log('Будильник успешно удален');
+            return true;
         }
         
-        // Если ничего не нашли, выдаем ошибку и выходим из метода
-        if (searchID === 0) {
-            console.error('Будильника с таким ID не существует');
-            return;
-        }
     }
 
     printAlarms() {
@@ -56,8 +59,8 @@ class AlarmClock {
 
         //Печатаем все звонки
         console.log(`Печать всех будильников в количестве ${this.alarmCollection.length}:`);
-        this.alarmCollection.forEach((item, idx) => 
-        console.log(`Будильник №${idx+1} заведен на время ${item.time}`));
+        this.alarmCollection.forEach((item) => 
+        console.log(`Будильник №${item.id} заведен на время ${item.time}`));
     }
 
     getCurrentFormattedTime() {
@@ -71,8 +74,8 @@ class AlarmClock {
     }
 
     start() {
-        let that = this;
         
+        // Задаем интервал
         if (this.timerId === null) {
             console.log(`Текущего будильника нет. Задаем новый интервал.`);
             let interval = setInterval( () => {
@@ -85,13 +88,13 @@ class AlarmClock {
             this.timerId = interval;
         }
 
-        // Функция проверки звонков на совпадение текущему времени
-        function checkClock(item) {
-            let currentTime = that.getCurrentFormattedTime();         
-            if (currentTime === item.time) {
-                console.log(item.action);
+        // Функция проверки звонков на совпадение текущему времени, если совпадает - вызываем callback
+        const checkClock = (item) => {       
+            if (this.getCurrentFormattedTime() === item.time) {
+                item.action();
             }
-        }
+        };
+
 
     }
 
